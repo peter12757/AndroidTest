@@ -12,7 +12,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/audioLib" />
-            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/basedroid" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
