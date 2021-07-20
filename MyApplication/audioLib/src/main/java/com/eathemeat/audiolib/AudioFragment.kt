@@ -1,5 +1,6 @@
 package com.eathemeat.audiolib
 
+import android.media.MediaRecorder
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -34,7 +35,8 @@ class AudioFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_audio, container, false)
+        var view = inflater.inflate(R.layout.fragment_audio, container, false)
+        return view;
     }
 
     companion object {

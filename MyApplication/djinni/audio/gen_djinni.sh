@@ -1,32 +1,96 @@
 #! /usr/bin/env bash
+set -eu
+shopt -s nullglob
 
-cpp_out="cpp"
-jni_out="jni"
-objc_out="objc"
-java_out="java/com/eathemeat/audio"
+# Locate the script file.  Cross symlinks if necessary.
+loc="$0"
+while [ -h "$loc" ]; do
+    ls=`ls -ld "$loc"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+        loc="$link"  # Absolute link
+    else
+        loc="`dirname "$loc"`/$link"  # Relative link
+    fi
+done
+base_dir=$(cd "`dirname "$loc"`" && pwd)
+
+temp_out="$base_dir/djinni-output-temp"
+
+in="$base_dir/audio.djinni"
+
+cpp_out="$base_dir/generated-src/cpp"
+jni_out="$base_dir/generated-src/jni"
+objc_out="$base_dir/generated-src/objc"
+java_out="$base_dir/generated-src/java/com/eathemeat/audio"
+
 java_package="com.eathemeat.audio"
-namespace="eathemeat"
-jni_namespace="eathemeat_jni"
-objc_prefix="Audio"
-djinni_file="audio.djinni"
 
+gen_stamp="$temp_out/gen.stamp"
 
+if [ $# -eq 0 ]; then
+    # Normal build.
+    true
+elif [ $# -eq 1 ]; then
+    command="$1"; shift
+    if [ "$command" != "clean" ]; then
+        echo "Unexpected argument: \"$command\"." 1>&2
+        exit 1
+    fi
+    for dir in "$temp_out" "$cpp_out" "$jni_out" "$java_out"; do
+        if [ -e "$dir" ]; then
+            echo "Deleting \"$dir\"..."
+            rm -r "$dir"
+        fi
+    done
+    exit
+fi
 
-../lib/djinni/src/run \
-   --java-out $java_out \
-   --java-package $java_package \
-   --java-cpp-exception DbxException \ # Choose between a customized C++ exception in Java and java.lang.RuntimeException (the default).
-   --ident-java-field mFooBar \ # Optional, this adds an "m" in front of Java field names
-   \
-   --cpp-out $cpp_out \
-   \
-   --jni-out $jni \
-   --ident-jni-class JNIFooBar \ # This adds a "Native" prefix to JNI class
-   --ident-jni-file JNIFooBar \ # This adds a prefix to the JNI filenames otherwise the cpp and jni filenames are the same.
-   \
-   --objc-out $objc_out \
-   --objc-type-prefix $objc_prefix \ # Apple suggests Objective-C classes have a prefix for each defined type.
-   \
-   --objcpp-out $objc_out/private \
-   \
-   --idl $djinni_file
+# Build djinni
+"$base_dir/../lib/djinni/src/build"
+
+[ ! -e "$temp_out" ] || rm -r "$temp_out"
+"$base_dir/../lib/djinni/src/run-assume-built" \
+    --java-out "$temp_out/java" \
+    --java-package $java_package \
+    --java-class-access-modifier "package" \
+    --java-generate-interfaces true \
+    --java-nullable-annotation "javax.annotation.CheckForNull" \
+    --java-nonnull-annotation "javax.annotation.Nonnull" \
+    --ident-java-field mFooBar \
+    \
+    --cpp-out "$temp_out/cpp" \
+    --cpp-namespace textsort \
+    --ident-cpp-enum-type foo_bar \
+    \
+    --jni-out "$temp_out/jni" \
+    --ident-jni-class NativeFooBar \
+    --ident-jni-file NativeFooBar \
+    \
+    --objc-out "$temp_out/objc" \
+    --objcpp-out "$temp_out/objc" \
+    --objc-type-prefix TXS \
+    --objc-swift-bridging-header "TextSort-Bridging-Header" \
+    \
+    --idl "$in"
+
+# Copy changes from "$temp_output" to final dir.
+
+mirror() {
+    local prefix="$1" ; shift
+    local src="$1" ; shift
+    local dest="$1" ; shift
+    mkdir -p "$dest"
+    rsync -r --delete --checksum --itemize-changes "$src"/ "$dest" | sed "s/^/[$prefix]/"
+}
+
+echo "Copying generated code to final directories..."
+mirror "cpp" "$temp_out/cpp" "$cpp_out"
+mirror "java" "$temp_out/java" "$java_out"
+mirror "jni" "$temp_out/jni" "$jni_out"
+mirror "objc" "$temp_out/objc" "$objc_out"
+
+date > "$gen_stamp"
+
+echo "djinni completed."
+
