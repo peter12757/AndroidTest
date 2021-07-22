@@ -13,4 +13,6 @@
                 audioFormat:(int32_t)audioFormat
           bufferSizeInBytes:(int32_t)bufferSizeInBytes;
 
+- (int32_t)stopAudiorecord;
+
 @end

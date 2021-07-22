@@ -33,4 +33,14 @@ CJNIEXPORT jint JNICALL Java_com_eathemeat_audio_AudioApi_00024CppProxy_native_1
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 
+CJNIEXPORT jint JNICALL Java_com_eathemeat_audio_AudioApi_00024CppProxy_native_1stopAudiorecord(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
+        const auto& ref = ::djinni::objectFromHandleAddress<::textsort::AudioApi>(nativeRef);
+        auto r = ref->stop_audiorecord();
+        return ::djinni::release(::djinni::I32::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
+}
+
 }  // namespace djinni_generated

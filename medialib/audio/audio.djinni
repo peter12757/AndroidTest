@@ -5,5 +5,7 @@ AudioApi = interface +c {
     start_audiorecord(audioSource:i32, sampleRateInHz:i32, channelConfig:i32,
                                      audioFormat:i32, bufferSizeInBytes:i32):i32;
 
+    stop_audiorecord():i32;
+
 
 }

@@ -11,6 +11,8 @@ import javax.annotation.Nonnull;
 /*package*/ interface AudioApi {
     public int startAudiorecord(int audioSource, int sampleRateInHz, int channelConfig, int audioFormat, int bufferSizeInBytes);
 
+    public int stopAudiorecord();
+
     static final class CppProxy implements AudioApi
     {
         private final long nativeRef;
@@ -41,5 +43,13 @@ import javax.annotation.Nonnull;
             return native_startAudiorecord(this.nativeRef, audioSource, sampleRateInHz, channelConfig, audioFormat, bufferSizeInBytes);
         }
         private native int native_startAudiorecord(long _nativeRef, int audioSource, int sampleRateInHz, int channelConfig, int audioFormat, int bufferSizeInBytes);
+
+        @Override
+        public int stopAudiorecord()
+        {
+            assert !this.destroyed.get() : "trying to use a destroyed object";
+            return native_stopAudiorecord(this.nativeRef);
+        }
+        private native int native_stopAudiorecord(long _nativeRef);
     }
 }
