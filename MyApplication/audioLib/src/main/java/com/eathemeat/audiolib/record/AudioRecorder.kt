@@ -99,6 +99,8 @@ class AudioRecorder: Handler.Callback{
                 audioRecord?.stop()
             }
         }
+
+        return ret
     }
 
 

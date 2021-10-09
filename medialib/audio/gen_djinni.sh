@@ -19,10 +19,10 @@ temp_out="$base_dir/djinni-output-temp"
 
 in="$base_dir/audio.djinni"
 
-cpp_out="$base_dir/generated-src/cpp"
-jni_out="$base_dir/generated-src/jni"
-objc_out="$base_dir/generated-src/objc"
-java_out="$base_dir/generated-src/java/com/eathemeat/audio"
+cpp_out="$base_dir/gen-src/cpp"
+jni_out="$base_dir/gen-src/jni"
+objc_out="$base_dir/gen-src/objc"
+java_out="$base_dir/gen-src/java/com/eathemeat/audio"
 
 java_package="com.eathemeat.audio"
 
@@ -47,10 +47,10 @@ elif [ $# -eq 1 ]; then
 fi
 
 # Build djinni
-"$base_dir/../lib/djinni/src/build"
+"$base_dir/../djinni/src/build"
 
 [ ! -e "$temp_out" ] || rm -r "$temp_out"
-"$base_dir/../lib/djinni/src/run-assume-built" \
+"$base_dir/../djinni/src/run-assume-built" \
     --java-out "$temp_out/java" \
     --java-package $java_package \
     --java-class-access-modifier "package" \

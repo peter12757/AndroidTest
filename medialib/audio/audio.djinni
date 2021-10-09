@@ -2,6 +2,8 @@
 
 #interface
 AudioApi = interface +c {
+    static createAudioApi():i64;
+
     start_audiorecord(audioSource:i32, sampleRateInHz:i32, channelConfig:i32,
                                      audioFormat:i32, bufferSizeInBytes:i32):i32;
 

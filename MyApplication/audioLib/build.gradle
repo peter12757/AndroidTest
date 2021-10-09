@@ -28,6 +28,12 @@ android {
         }
     }
 
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -43,9 +49,15 @@ android {
     }
 }
 
-packagingOptions {
-        doNotStrip "**.so"
+
+sourceSets {
+    main {
+        java.srcDirs += ['src','../../medialib/audio/gen-src/java']
+
+    }
+
 }
+
 
 dependencies {
 
