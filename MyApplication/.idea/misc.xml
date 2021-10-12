@@ -4,8 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="androidtest/src/main/res/layout/activity_android_test.xml" value="0.35" />
+        <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.21979166666666666" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3640625" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/layout/item_test.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.20364583333333333" />
       </map>
     </option>
   </component>

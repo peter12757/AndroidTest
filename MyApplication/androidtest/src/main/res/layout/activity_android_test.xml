@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_all"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AndroidTestActivity">
@@ -12,16 +13,27 @@
         android:text="开始viewpost"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+    <Button
+        android:id="@+id/btn_removeview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="移除view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_startpost"/>
     <LinearLayout
         android:id="@+id/ll_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/btn_startpost"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintStart_toEndOf="@+id/btn_removeview"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
 
-        <com.bigo.androidtest.test.MyView
+        tools:ignore="MissingConstraints">
+
+        <com.eathemeat.androidtest.test.MyView
             android:id="@+id/mv_test1"
             android:layout_width="match_parent"
+            android:background="@color/teal_200"
             android:layout_height="30dp"/>
 
     </LinearLayout>

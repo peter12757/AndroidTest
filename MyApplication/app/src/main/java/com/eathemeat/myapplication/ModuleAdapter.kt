@@ -30,10 +30,9 @@ class ModuleAdapter : RecyclerView.Adapter<ModuleAdapter.ModeluViewholder>() {
 
 
     class ModeluViewholder(val binding: ItemTestBinding,var itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-
         fun update(item: ModuleItem): Unit {
             binding.tvModuleTitle.text = item.getTitle()
+            binding.root.setOnClickListener { v -> v?.let { item.startUp(it.context) } }
         }
 
     }

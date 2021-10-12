@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$/androidtest" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/basedroid" />
+            <option value="$PROJECT_DIR$/medialib" />
+            <option value="$PROJECT_DIR$/test" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
