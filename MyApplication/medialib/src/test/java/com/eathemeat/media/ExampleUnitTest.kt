@@ -1,4 +1,4 @@
-package com.eathemeat.myapplication
+package com.eathemeat.media
 
 import org.junit.Test
 

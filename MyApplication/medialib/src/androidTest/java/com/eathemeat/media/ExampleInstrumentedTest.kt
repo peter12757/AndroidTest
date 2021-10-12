@@ -1,4 +1,4 @@
-package com.eathemeat.myapplication
+package com.eathemeat.media
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
